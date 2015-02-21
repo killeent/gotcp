@@ -2,22 +2,22 @@ package main
 
 import (
 	"fmt"
+	"log"
 	"net"
 )
 
 func main() {
 	server, err := net.Listen("tcp", ":12321")
 	if err != nil {
-		fmt.Println(err)
-		return
+		log.Fatal(err)
 	}
 	for {
 		conn, err := server.Accept()
 		fmt.Println("Connection Received!")
 		if err != nil {
-			fmt.Println(err)
+			log.Fatal(err)
 		}
-		conn.Write([]byte("goodbye\n"))
+		fmt.Fprintln(conn, "goodbye!")
 		conn.Close()
 	}
 }
